@@ -24,11 +24,16 @@ router.get('/:id/actions', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
+    db.insert(req.body)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json({ message: 'Could not create project' }));
 });
 
 router.put('/:id', (req, res) => {
-
+    const projectId = req.params.id;
+    db.update(projectId, req.body)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json({ message: 'Could not update project' }));
 });
 
 router.delete('/:id', (req, res) => {
