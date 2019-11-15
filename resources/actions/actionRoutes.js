@@ -15,15 +15,22 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    db.insert(req.body)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json({ message: 'Could not create action' }));
+});
+
+router.put('/:id', (req, res) => {
+    db.update(req.params.id, req.body)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json({ message: 'Could not update action' }));
 
 });
 
-router.put('/', (req, res) => {
-
-});
-
-router.delete('/', (req, res) => {
-
+router.delete('/:id', (req, res) => {
+    db.remove(req.params.id)
+        .then(data => res.status(200).json({ message: 'Delete Successful' }))
+        .catch(err => res.status(500).json({ message: 'Could not delete action' }));
 });
 
 module.exports = router;
